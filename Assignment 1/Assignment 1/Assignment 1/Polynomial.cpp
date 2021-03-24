@@ -77,23 +77,6 @@ bool Polynomial::operator==( const Polynomial& aRHS ) const
     return Result;
 }
 
-double Polynomial::operator()(double aX) const {
-
-}
-
-Polynomial Polynomial::getDifferential() const {
-
-}
-
-Polynomial Polynomial::getIndefiniteIntegral() const {
-
-}
-
-double Polynomial::getDefiniteIntegral(double aXLow, double aXHigh) const {
-
-}
-
-
 istream& operator>>( istream& aIStream, Polynomial& aObject )
 {
 	// read degree

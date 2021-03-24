@@ -21,6 +21,9 @@
     <ClCompile Include="..\..\Polynomial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PolynomialPS1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Polynomial.h">

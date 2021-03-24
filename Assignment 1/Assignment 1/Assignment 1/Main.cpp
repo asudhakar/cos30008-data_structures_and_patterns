@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-//#define P1
+#define P1
 //#define P2
 //#define P3
 //#define Automate
