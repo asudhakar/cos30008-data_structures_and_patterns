@@ -5,7 +5,7 @@
 #define P1
 //#define P2
 //#define P3
-//#define Automate
+#define Automate
 
 using namespace std;
 
