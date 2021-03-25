@@ -16,8 +16,13 @@ double Polynomial::operator()(double aX) const {
 }
 
 Polynomial Polynomial::getDifferential() const {
-	Polynomial a;
-	return a;
+	Polynomial result;
+	result.fDegree = fDegree - 1;
+	for (int i = fDegree; i >= 0; i--)
+	{
+		result.fCoeffs[i] = fCoeffs[i] * i;
+	}
+	return result;
 }
 
 Polynomial Polynomial::getIndefiniteIntegral() const {
