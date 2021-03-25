@@ -57,6 +57,18 @@ Polynomial Polynomial::getIndefiniteIntegral() const {
 }
 
 double Polynomial::getDefiniteIntegral(double aXLow, double aXHigh) const {
-	double b = 0;
-	return b;
+	double low = 0;
+	double high = 0;
+
+	for (int i = fDegree; i >= 0; i--)
+	{
+		low += fCoeffs[i] / ((double) i + 1) * pow(aXLow, i + 1);
+	}
+	
+	for (int i = fDegree; i >= 0; i--)
+	{
+		high += fCoeffs[i] / ((double)i + 1) * pow(aXHigh, i + 1);
+	}
+
+	return high - low;
 }
