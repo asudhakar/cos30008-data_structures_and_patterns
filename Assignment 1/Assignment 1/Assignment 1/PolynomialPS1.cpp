@@ -1,5 +1,3 @@
-// COS30008, Tutorial 3, 2021
-
 #include "Polynomial.h"
 #include <math.h>
 
