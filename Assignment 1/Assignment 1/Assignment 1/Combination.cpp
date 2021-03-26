@@ -1,5 +1,4 @@
 #include "Combination.h"
-#include <iostream>
 
 using namespace std;
 
