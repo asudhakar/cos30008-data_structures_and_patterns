@@ -4,69 +4,69 @@
 using namespace std;
 
 double Polynomial::operator()(double aX) const {
-	double result = 0;
+	double lResult = 0;
 
 	for (int i = fDegree; i >= 0; i--)
 	{
-		result += fCoeffs[i] * pow(aX, i);
+		lResult += fCoeffs[i] * pow(aX, i);
 	}
 
-	return result;
+	return lResult;
 }
 
 Polynomial Polynomial::getDifferential() const {
-	Polynomial result;
+	Polynomial lResult;
 
 	for (int i = fDegree; i >= 0; i--)
 	{
-		result.fCoeffs[i - 1] = fCoeffs[i] * i;
+		lResult.fCoeffs[i - 1] = fCoeffs[i] * i;
 	}
 
 	if (fDegree - 1 >= 0)
 	{
-		result.fDegree = fDegree - 1 <= MAX_POLYNOMIAL ? fDegree - 1 : MAX_POLYNOMIAL;
+		lResult.fDegree = fDegree - 1 <= MAX_POLYNOMIAL ? fDegree - 1 : MAX_POLYNOMIAL;
 	}
 	else
 	{
-		result.fDegree = 0;
+		lResult.fDegree = 0;
 	}
 	
-	return result;
+	return lResult;
 }
 
 Polynomial Polynomial::getIndefiniteIntegral() const {
-	Polynomial result;
+	Polynomial lResult;
 
 	if (fDegree + 1 <= MAX_POLYNOMIAL)
 	{
-		result.fDegree = fDegree + 1;
+		lResult.fDegree = fDegree + 1;
 	}
 	else
 	{
-		result.fDegree = MAX_POLYNOMIAL;
+		lResult.fDegree = MAX_POLYNOMIAL;
 	}
 
-	for (int i = result.fDegree - 1; i >= 0; i--)
+	for (int i = lResult.fDegree - 1; i >= 0; i--)
 	{
-		result.fCoeffs[i + 1] = fCoeffs[i] / ((double)i + 1);
+		lResult.fCoeffs[i + 1] = fCoeffs[i] / ((double)i + 1);
 	}
 	
-	return result;
+	return lResult;
 }
 
 double Polynomial::getDefiniteIntegral(double aXLow, double aXHigh) const {
-	double low = 0;
-	double high = 0;
+	double lLow = 0;
+	double lHigh = 0;
 
 	for (int i = fDegree; i >= 0; i--)
 	{
-		low += fCoeffs[i] / ((double) i + 1) * pow(aXLow, i + 1);
+		lLow += fCoeffs[i] / ((double) i + 1) * pow(aXLow, i + 1);
 	}
 	
 	for (int i = fDegree; i >= 0; i--)
 	{
-		high += fCoeffs[i] / ((double)i + 1) * pow(aXHigh, i + 1);
+		lHigh += fCoeffs[i] / ((double)i + 1) * pow(aXHigh, i + 1);
 	}
 
-	return high - low;
+	return lHigh - lLow;
 }
