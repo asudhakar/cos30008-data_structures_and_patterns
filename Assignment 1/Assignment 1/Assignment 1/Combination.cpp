@@ -19,7 +19,7 @@ unsigned long long Combination::operator()() const {
 	if (fK > fN) return 0;
 	if (fK == fN) return 1;
 
-	unsigned long long lResult = fN;
+	unsigned long long lResult = 1;
 	for (int k = 1; k <= fK; k++)
 	{
 		lResult *= ((unsigned long long)fN - k + 1);
