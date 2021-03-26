@@ -21,6 +21,9 @@
     <ClInclude Include="Combination.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BernsteinBasePolynomial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PolynomialPS1.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Combination.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BersteinBasePolynomial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

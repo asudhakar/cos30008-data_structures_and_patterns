@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BernsteinBasePolynomial.h" />
     <ClInclude Include="Combination.h" />
     <ClInclude Include="Polynomial.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BersteinBasePolynomial.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Polynomial.cpp" />
     <ClCompile Include="PolynomialPS1.cpp" />

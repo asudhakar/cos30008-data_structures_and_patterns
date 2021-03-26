@@ -1,8 +1,6 @@
 #include "Polynomial.h"
 #include <math.h>
 
-using namespace std;
-
 double Polynomial::operator()(double aX) const {
 	double lResult = 0;
 

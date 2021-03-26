@@ -1,7 +1,5 @@
 #include "Combination.h"
 
-using namespace std;
-
 Combination::Combination(unsigned int aN, unsigned int aK) {
 	fN = aN;
 	fK = aK;
