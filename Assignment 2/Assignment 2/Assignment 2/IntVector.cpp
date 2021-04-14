@@ -27,12 +27,12 @@ void IntVector::swap(size_t aSourceIndex, size_t aTargetIndex) {
 		throw out_of_range("Can't swap the same index.");
 	}
 
-	if (aSourceIndex < 0 || aSourceIndex >= fNumberOfElements) {
-		throw out_of_range("Source Target Index is out of range.");
+	if (aSourceIndex >= fNumberOfElements) {
+		throw out_of_range("Illegal Source Vector Index.");
 	}
 
-	if (aTargetIndex < 0 || aTargetIndex >= fNumberOfElements) {
-		throw out_of_range("Target Index is out of range.");
+	if (aTargetIndex >= fNumberOfElements) {
+		throw out_of_range("Illegal Target Vector Index.");
 	}
 
 	int lBuffer = fElements[aSourceIndex];
@@ -41,12 +41,12 @@ void IntVector::swap(size_t aSourceIndex, size_t aTargetIndex) {
 }
 
 void IntVector::sort(const IntSorter& aSorter) {
-
+	aSorter(*this);
 }
 
 const int IntVector::operator[](size_t aIndex) const {
 	if (aIndex < 0 || aIndex >= fNumberOfElements) {
-		throw out_of_range("Index is out of range.");
+		throw out_of_range("Illegal Vector Index.");
 	}
 
 	return fElements[aIndex];

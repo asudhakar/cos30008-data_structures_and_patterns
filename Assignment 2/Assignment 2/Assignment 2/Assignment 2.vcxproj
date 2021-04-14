@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CocktailShakerSort.cpp" />
     <ClCompile Include="IntVector.cpp" />
     <ClCompile Include="IntVectorIterator.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CocktailShakerSort.h" />
     <ClInclude Include="IntSorter.h" />
     <ClInclude Include="IntVector.h" />
     <ClInclude Include="IntVectorIterator.h" />
