@@ -1,0 +1,67 @@
+#include "Vector2D.h"
+#include <math.h>
+
+Vector2D::Vector2D(double aX = 1.0, double aY = 0.0) : fX(aX), fY(aY) {
+
+}
+
+void Vector2D::setX(double aX) {
+	fX = aX;
+}
+double Vector2D::getX() const {
+	return fX;
+}
+void Vector2D::setY(double aY) {
+	fY = aY;
+}
+double Vector2D::getY() const {
+	return fY;
+}
+
+Vector2D Vector2D::operator+(const Vector2D& aRHS) const {
+	Vector2D lResult;
+	lResult.setX(fX + aRHS.getX());
+	lResult.setY(fY + aRHS.getY());
+
+	return lResult;
+}
+
+Vector2D Vector2D::operator-(const Vector2D& aRHS) const {
+	Vector2D lResult;
+	lResult.setX(fX - aRHS.getX());
+	lResult.setY(fY - aRHS.getY());
+
+	return lResult;
+}
+
+double Vector2D::magnitude() const {
+	return sqrt(pow(fX, 2) + pow(fY, 2));
+}
+
+double Vector2D::direction() const {
+	return atan2(fY, fX);
+}
+
+double Vector2D::dot(const Vector2D& aRHS) const {
+	return fX * aRHS.getX() + fY * aRHS.getY();
+}
+
+double Vector2D::cross(const Vector2D& aRHS) const {
+	return fX * aRHS.getY() - aRHS.getX() * fY;
+}
+
+double Vector2D::angleBetween(const Vector2D& aRHS) const {
+	//TODO: Check conditions before returning
+	return acos(dot(aRHS) / (magnitude() * aRHS.magnitude()));
+}
+
+std::ostream& operator<<(std::ostream& aOutStream, const Vector2D& aObject) {
+	aOutStream << "[" << aObject.fX << ", " << aObject.fY << "]";
+	return aOutStream;
+}
+
+std::istream& operator>>(std::istream& aInStream, Vector2D& aObject) {
+	double lX, lY;
+	aInStream >> lX >> lY;
+	return aInStream;
+}
