@@ -52,14 +52,14 @@ public:
     // Are this point and aOther on the same line segment?
     bool isCollinear( const Point2D& aOther ) const;
 
-    // Does line segment this-aP2 make a right turn at this point?
-    bool isClockwise( const Point2D& aP0, const Point2D& aP2 ) const;
+    //// Does line segment this-aP2 make a right turn at this point?
+    //bool isClockwise( const Point2D& aP0, const Point2D& aP2 ) const;
 
-    // Is this' y-coordinate less than aRHS's y-coordinate?
-    // If there is a tie, this' x-coordinate less than aRHS's x-coordinate?
-    bool operator<( const Point2D& aRHS ) const;
-      
-    // I/O for 2D points
-    friend std::ostream& operator<<( std::ostream& aOStream, const Point2D& aObject );
-    friend std::istream& operator>>( std::istream& aIStream, Point2D& aObject );
+    //// Is this' y-coordinate less than aRHS's y-coordinate?
+    //// If there is a tie, this' x-coordinate less than aRHS's x-coordinate?
+    //bool operator<( const Point2D& aRHS ) const;
+    //  
+    //// I/O for 2D points
+    //friend std::ostream& operator<<( std::ostream& aOStream, const Point2D& aObject );
+    //friend std::istream& operator>>( std::istream& aIStream, Point2D& aObject );
 };

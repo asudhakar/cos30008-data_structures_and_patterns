@@ -1,7 +1,7 @@
 #include "Vector2D.h"
 #include <math.h>
 
-Vector2D::Vector2D(double aX = 1.0, double aY = 0.0) : fX(aX), fY(aY) {
+Vector2D::Vector2D(double aX, double aY) : fX(aX), fY(aY) {
 
 }
 
@@ -63,5 +63,7 @@ std::ostream& operator<<(std::ostream& aOutStream, const Vector2D& aObject) {
 std::istream& operator>>(std::istream& aInStream, Vector2D& aObject) {
 	double lX, lY;
 	aInStream >> lX >> lY;
+	aObject.setX(lX);
+	aObject.setY(lY);
 	return aInStream;
 }
