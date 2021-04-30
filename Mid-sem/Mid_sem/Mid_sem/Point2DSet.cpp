@@ -35,7 +35,7 @@ void Point2DSet::populate(const std::string& aFileName) {
 }
 
 void Point2DSet::sort(Comparator aComparator) {
-
+	stable_sort(fPoints.begin(), fPoints.end(), aComparator);
 }
 
 void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
@@ -55,9 +55,9 @@ const Point2D& Point2DSet::operator[](size_t aIndex) const {
 }
 
 Iterator Point2DSet::begin() const {
-
+	return fPoints.begin();
 }
 
 Iterator Point2DSet::end() const {
-
+	return fPoints.end();
 }
