@@ -43,15 +43,15 @@ void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
 }
 
 size_t Point2DSet::size() const {
-
+	return fPoints.size();
 }
 
 void Point2DSet::clear() {
-
+	fPoints.clear();
 }
 
 const Point2D& Point2DSet::operator[](size_t aIndex) const {
-
+	return fPoints[aIndex];
 }
 
 Iterator Point2DSet::begin() const {
