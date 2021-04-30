@@ -57,7 +57,7 @@ void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
 
 	for (size_t i = 0; i < lSize; i++)
 	{
-		cout << fPoints[i].getId() << endl;
+		cout << fPoints[i] << endl;
 	}
 
 	for (Point2D& point2D : fPoints)
@@ -65,8 +65,17 @@ void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
 		point2D.setOrigin(fPoints[0]);
 	}
 
-	cout << endl << "New origin is: " << fPoints[10].getOrigin() << endl;
+	cout << endl << "New origin is: " << fPoints[10].getOrigin() << endl << endl;
+	fPoints.erase(begin());
 
+	sort(orderByPolarAngle);
+
+	lSize = fPoints.size();
+
+	for (size_t i = 0; i < lSize; i++)
+	{
+		cout << fPoints[i] << endl;
+	}
 }
 
 size_t Point2DSet::size() const {
