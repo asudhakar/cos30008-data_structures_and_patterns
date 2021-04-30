@@ -22,7 +22,16 @@ bool Point2DSet::doesNotTurnLeft(const Point2D& aPoint) const {
 }
 
 void Point2DSet::populate(const std::string& aFileName) {
+	int lPointCount;
+	Point2D lPoint2D;
+
 	ifstream aInStream(aFileName, ifstream::in);
+	aInStream >> lPointCount;
+	for (int i = 0; i < lPointCount; i++)
+	{
+		aInStream >> lPoint2D;
+		add(lPoint2D);
+	}
 }
 
 void Point2DSet::sort(Comparator aComparator) {
