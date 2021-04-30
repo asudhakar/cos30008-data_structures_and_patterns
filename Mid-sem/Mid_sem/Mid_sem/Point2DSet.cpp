@@ -18,7 +18,7 @@ void Point2DSet::removeLast() {
 }
 
 bool Point2DSet::doesNotTurnLeft(const Point2D& aPoint) const {
-
+	return aPoint.isClockwise(fPoints[0], fPoints[1]);
 }
 
 void Point2DSet::populate(const std::string& aFileName) {
