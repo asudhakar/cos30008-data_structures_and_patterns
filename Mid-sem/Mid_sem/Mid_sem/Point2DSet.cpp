@@ -34,12 +34,24 @@ void Point2DSet::populate(const std::string& aFileName) {
 	}
 }
 
+bool orderByCoordinates(const Point2D& aLeft, const Point2D& aRight) {
+	return aLeft < aRight;
+}
+
+bool orderByPolarAngle(const Point2D& aLHS, const Point2D& aRHS) {
+	if (aLHS.isCollinear(aRHS)) {
+		return aLHS.magnitude() - aRHS.magnitude() <= -0.0001;
+	}
+
+	return aLHS.direction() - aRHS.direction() <= -0.001;
+}
+
 void Point2DSet::sort(Comparator aComparator) {
 	stable_sort(fPoints.begin(), fPoints.end(), aComparator);
 }
 
 void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
-
+	sort(orderByCoordinates);
 }
 
 size_t Point2DSet::size() const {
