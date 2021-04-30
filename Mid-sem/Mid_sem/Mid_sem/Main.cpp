@@ -54,6 +54,11 @@ int main()
 using namespace std;
 
 int main() {
+    Point2D test;
+    cin >> test;
+
+    cout << test;
+
     Point2D p1("0", 3, 4);
     Point2D p2("1", -3, -4);
     cout << "P1 direction to origin: " << p1.direction() * 180 / 3.141592 << " degrees" << endl;

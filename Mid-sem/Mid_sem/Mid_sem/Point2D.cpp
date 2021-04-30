@@ -1,6 +1,7 @@
 #include "Point2D.h"
 
 static const Point2D gCoordinateOrigin;
+static const double gEpsilon = 0.0001;
 
 double Point2D::directionTo(const Point2D& aOther) const {
 	return atan2(fPosition.getY() - aOther.getY(), fPosition.getX() - aOther.getX());
@@ -24,7 +25,7 @@ Point2D::Point2D(std::istream& aIStream) : fOrigin(&gCoordinateOrigin) {
 	aIStream >> fId >> lX >> lY;
 
 	fPosition.setX(lX);
-	fPosition.setX(lY);
+	fPosition.setY(lY);
 }
 
 const std::string& Point2D::getId() const {
@@ -56,10 +57,7 @@ const Point2D& Point2D::getOrigin() const {
 }
 
 Vector2D Point2D::operator-(const Point2D& aRHS) const {
-	Vector2D lResult;
-	lResult.setX(fPosition.getX() - aRHS.getX());
-	lResult.setY(fPosition.getY() - aRHS.getY());
-	return lResult;
+	return Vector2D(fPosition.getX() - aRHS.getX(), fPosition.getY() - aRHS.getY());
 }
 
 double Point2D::direction() const {
@@ -71,24 +69,29 @@ double Point2D::magnitude() const {
 }
 
 bool Point2D::isCollinear(const Point2D& aOther) const {
-	double lResult;
-	lResult = abs(direction() - aOther.direction());
-	return	lResult <= 0.0001 && lResult >= 0 ||
+	double lResult = abs(direction() - aOther.direction());
+	return	lResult <= gEpsilon && lResult >= 0 ||
 			lResult <= 3.1416 && lResult >= 3.1415;
 }
 
-//bool Point2D::isClockwise(const Point2D& aP0, const Point2D& aP2) const {
-//
-//}
-//
-//bool Point2D::operator<(const Point2D& aRHS) const {
-//
-//}
-//
-//std::ostream& operator<<(std::ostream& aOStream, const Point2D& aObject) {
-//
-//}
-//
-//std::istream& operator>>(std::istream& aIStream, Point2D& aObject) {
-//
-//}
+bool Point2D::isClockwise(const Point2D& aP0, const Point2D& aP2) const {
+	return Vector2D(this - fOrigin).cross(Vector2D(aP2 - *fOrigin)) > 0;
+}
+
+bool Point2D::operator<(const Point2D& aRHS) const {
+	double lYCompare = abs(fPosition.getY() - aRHS.getY());
+	if (lYCompare <= gEpsilon || lYCompare == 0 && abs(fPosition.getX() - aRHS.getX()) <= gEpsilon)
+		return true;
+	return false;
+}
+
+std::ostream& operator<<(std::ostream& aOStream, const Point2D& aObject) {
+	aOStream << aObject.fId << ": (" << aObject.fPosition.getX() << ", " << aObject.fPosition.getY() << ")";
+
+	return aOStream;
+}
+
+std::istream& operator>>(std::istream& aIStream, Point2D& aObject) {
+	aObject = Point2D(aIStream);
+	return aIStream;
+}

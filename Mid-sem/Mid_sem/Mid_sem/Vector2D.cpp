@@ -63,7 +63,6 @@ std::ostream& operator<<(std::ostream& aOutStream, const Vector2D& aObject) {
 std::istream& operator>>(std::istream& aInStream, Vector2D& aObject) {
 	double lX, lY;
 	aInStream >> lX >> lY;
-	aObject.setX(lX);
-	aObject.setY(lY);
+	aObject = Vector2D(lX, lY);
 	return aInStream;
 }
