@@ -37,6 +37,9 @@ public:
     // Load 2D points from file
     void populate( const std::string& aFileName );
 
+    // Sort set using stable_sort on vectors
+    void sort(Comparator aComparator);
+
     // Run Graham's scan using out parameter aConvexHull
     void buildConvexHull( Point2DSet& aConvexHull );
 
@@ -46,8 +49,6 @@ public:
     // Clears set
     void clear();
 
-    // Sort set using stable_sort on vectors
-    void sort( Comparator aComparator );
 
     // Indexer for set
     const Point2D& operator[]( size_t aIndex ) const;

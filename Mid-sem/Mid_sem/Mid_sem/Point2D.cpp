@@ -1,4 +1,6 @@
 #include "Point2D.h"
+#include <iostream>
+using namespace std;
 
 static const Point2D gCoordinateOrigin;
 static const double gEpsilon = 0.0001;
@@ -75,18 +77,18 @@ bool Point2D::isCollinear(const Point2D& aOther) const {
 }
 
 bool Point2D::isClockwise(const Point2D& aP0, const Point2D& aP2) const {
-	return Vector2D(this - fOrigin).cross(Vector2D(aP2 - *fOrigin)) > 0;
+	return Vector2D(this - &aP0).cross(Vector2D(aP2 - aP0)) > 0;
 }
 
 bool Point2D::operator<(const Point2D& aRHS) const {
-	double lYCompare = abs(fPosition.getY() - aRHS.getY());
-	if (lYCompare <= gEpsilon || lYCompare == 0 && abs(fPosition.getX() - aRHS.getX()) <= gEpsilon)
+	double lYCompare = fPosition.getY() - aRHS.getY();
+	if (lYCompare <= -gEpsilon || lYCompare == 0 && fPosition.getX() - aRHS.getX() <= -gEpsilon)
 		return true;
 	return false;
 }
 
 std::ostream& operator<<(std::ostream& aOStream, const Point2D& aObject) {
-	aOStream << aObject.fId << ": (" << aObject.fPosition.getX() << ", " << aObject.fPosition.getY() << ")" << std::endl;
+	aOStream << aObject.fId << ": (" << aObject.fPosition.getX() << ", " << aObject.fPosition.getY() << ")";
 
 	return aOStream;
 }
