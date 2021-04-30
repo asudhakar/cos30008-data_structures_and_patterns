@@ -86,7 +86,7 @@ bool Point2D::operator<(const Point2D& aRHS) const {
 }
 
 std::ostream& operator<<(std::ostream& aOStream, const Point2D& aObject) {
-	aOStream << aObject.fId << ": (" << aObject.fPosition.getX() << ", " << aObject.fPosition.getY() << ")";
+	aOStream << aObject.fId << ": (" << aObject.fPosition.getX() << ", " << aObject.fPosition.getY() << ")" << std::endl;
 
 	return aOStream;
 }
