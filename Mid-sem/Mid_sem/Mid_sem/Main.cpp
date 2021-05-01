@@ -7,6 +7,7 @@
 //#define Main
 //#define Point2DTest
 #define Point2DSetTest
+#define AutoFill
 
 #ifdef Main
 #include "Point2DSet.h"
@@ -54,16 +55,24 @@ int main()
 
 #include <iostream>
 #include <cmath>
+#include <sstream>
 
 using namespace std;
 
 int main() {
     Point2D p1;
+    stringstream ss;
+
+#ifdef AutoFill
+    ss << "P1" << " " << -2 << " " << -1;
+    ss >> p1;
+#else
     cin >> p1;
-    cout << p1;
+#endif // AutoFill
+    cout << p1 << endl;
 
     Point2D p2("P2", -1, -1);
-    cout << p2;
+    cout << p2 << endl;
     cout << "P1 direction to origin: " << p1.direction() * 180 / 3.141592 << " degrees" << endl;
     cout << "P2 direction to origin: " << p2.direction() * 180 / 3.141592 << " degrees" << endl;
     cout << "P1 magnitude from origin: " << p1.magnitude() << endl;
