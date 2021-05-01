@@ -19,7 +19,7 @@ void Point2DSet::removeLast() {
 }
 
 bool Point2DSet::doesNotTurnLeft(const Point2D& aPoint) const {
-	return aPoint.isClockwise(fPoints[0], fPoints[2]);
+	return aPoint.isClockwise(fPoints[size() - 2], fPoints[size() - 1]);
 }
 
 void Point2DSet::populate(const std::string& aFileName) {
@@ -52,50 +52,31 @@ void Point2DSet::sort(Comparator aComparator) {
 }
 
 void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
-	cout << endl << "Sorted by Coords: " << endl;
-
+	//Sort by Coords
 	sort(orderByCoordinates);
 
-	size_t lSize = fPoints.size();
-	for (size_t i = 0; i < lSize; i++)
-	{
-		cout << fPoints[i] << endl;
-	}
-
+	//Asign new Origin
 	for (Point2D& point2D : fPoints)
 	{
 		point2D.setOrigin(fPoints[0]);
 	}
 
-	cout << endl << "New origin is: " << fPoints[10].getOrigin() << endl;
-	cout << endl << "Sorted by Angle: " << endl;
-
+	//Sort by Polar Angle
 	sort(orderByPolarAngle);
 
-	lSize = fPoints.size();
-	for (size_t i = 0; i < lSize; i++)
-	{
-		cout << fPoints[i] << endl;
-	}
-
+	//Add first 3 points
 	for (size_t i = 0; i < 3; i++)
 	{
 		aConvexHull.add(move(fPoints[i]));
 	}
 
-	cout << endl << "Convex Hull: " << endl;
-	lSize = aConvexHull.size();
-	for (size_t i = 0; i < lSize; i++)
+	//Graham Scan
+	for (size_t i = 3; i < size(); i++)
 	{
-		cout << aConvexHull[i] << endl;
+		while (aConvexHull.doesNotTurnLeft(fPoints[i]))
+			aConvexHull.removeLast();
+		aConvexHull.add(move(fPoints[i]));
 	}
-	//for (size_t i = 3; i < size(); i++)
-	//{
-	//	while (doesNotTurnLeft(aConvexHull[i]))
-	//	{
-	//		aConvexHull.removeLast();
-	//	}
-	//}
 }
 
 size_t Point2DSet::size() const {

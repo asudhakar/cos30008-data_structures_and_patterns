@@ -1,18 +1,16 @@
 #include "Point2D.h"
 #include <iostream>
-using namespace std;
 
+using namespace std;
 static const Point2D gCoordinateOrigin;
 static const double gEpsilon = 0.0001;
 
 double Point2D::directionTo(const Point2D& aOther) const {
-	Vector2D lResult = *this - aOther;
-	return atan2(lResult.getY(), lResult.getX());
+	return (*this - aOther).direction();
 }
 
 double Point2D::magnitudeTo(const Point2D& aOther) const {
-	Vector2D lResult = *this - aOther;
-	return sqrt(pow(lResult.getX(), 2) + pow(lResult.getY(), 2));
+	return (*this - aOther).magnitude();
 }
 
 Point2D::Point2D() : fId(""), fPosition(0, 0), fOrigin(&gCoordinateOrigin) {
@@ -78,7 +76,7 @@ bool Point2D::isCollinear(const Point2D& aOther) const {
 }
 
 bool Point2D::isClockwise(const Point2D& aP0, const Point2D& aP2) const {
-	return Vector2D(this - &aP0).cross(Vector2D(aP2 - aP0)) > 0;
+	return Vector2D(*this - aP0).cross(Vector2D(aP2 - aP0)) > 0;
 }
 
 bool Point2D::operator<(const Point2D& aRHS) const {

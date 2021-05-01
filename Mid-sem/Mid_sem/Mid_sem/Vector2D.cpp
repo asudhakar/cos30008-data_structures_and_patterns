@@ -43,8 +43,10 @@ double Vector2D::cross(const Vector2D& aRHS) const {
 }
 
 double Vector2D::angleBetween(const Vector2D& aRHS) const {
-	//TODO: Check conditions before returning
-	return acos(dot(aRHS) / (magnitude() * aRHS.magnitude()));
+	if (magnitude() == 0 && aRHS.magnitude() == 0)
+		return 0;
+
+	return acos(dot(aRHS) / magnitude() * aRHS.magnitude());
 }
 
 std::ostream& operator<<(std::ostream& aOutStream, const Vector2D& aObject) {
