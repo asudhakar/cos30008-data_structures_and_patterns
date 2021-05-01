@@ -19,19 +19,11 @@ double Vector2D::getY() const {
 }
 
 Vector2D Vector2D::operator+(const Vector2D& aRHS) const {
-	Vector2D lResult;
-	lResult.setX(fX + aRHS.getX());
-	lResult.setY(fY + aRHS.getY());
-
-	return lResult;
+	return Vector2D(fX + aRHS.getX(), fY + aRHS.getY());;
 }
 
 Vector2D Vector2D::operator-(const Vector2D& aRHS) const {
-	Vector2D lResult;
-	lResult.setX(fX - aRHS.getX());
-	lResult.setY(fY - aRHS.getY());
-
-	return lResult;
+	return Vector2D(fX - aRHS.getX(), fY - aRHS.getY());
 }
 
 double Vector2D::magnitude() const {

@@ -74,8 +74,7 @@ double Point2D::magnitude() const {
 
 bool Point2D::isCollinear(const Point2D& aOther) const {
 	double lResult = abs(direction() - aOther.direction());
-	return	lResult <= gEpsilon && lResult >= 0 ||
-			lResult <= 3.1416 && lResult >= 3.1415;
+	return	lResult <= gEpsilon && lResult >= 0 || lResult <= 3.1416 && lResult >= 3.1415;
 }
 
 bool Point2D::isClockwise(const Point2D& aP0, const Point2D& aP2) const {
@@ -83,15 +82,14 @@ bool Point2D::isClockwise(const Point2D& aP0, const Point2D& aP2) const {
 }
 
 bool Point2D::operator<(const Point2D& aRHS) const {
-	double lYCompare = fPosition.getY() - aRHS.getY();
-	if (lYCompare <= -gEpsilon || lYCompare == 0 && fPosition.getX() - aRHS.getX() <= -gEpsilon)
+	Vector2D lResult = *this - aRHS;
+	if (lResult.getY() <= -gEpsilon || lResult.getY() == 0 && lResult.getX() <= -gEpsilon)
 		return true;
 	return false;
 }
 
 std::ostream& operator<<(std::ostream& aOStream, const Point2D& aObject) {
 	aOStream << aObject.fId << ": (" << aObject.fPosition.getX() << ", " << aObject.fPosition.getY() << ")";
-
 	return aOStream;
 }
 

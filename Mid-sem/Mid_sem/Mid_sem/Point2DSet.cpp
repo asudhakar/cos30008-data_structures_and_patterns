@@ -4,6 +4,7 @@
 
 using namespace std;
 using Iterator = std::vector<Point2D>::const_iterator;
+static const double gEpsilon = 0.0001;
 
 void Point2DSet::add(const Point2D& aPoint) {
 	fPoints.push_back(aPoint);
@@ -40,10 +41,10 @@ bool orderByCoordinates(const Point2D& aLeft, const Point2D& aRight) {
 
 bool orderByPolarAngle(const Point2D& aLHS, const Point2D& aRHS) {
 	if (aLHS.isCollinear(aRHS)) {
-		return aLHS.magnitude() - aRHS.magnitude() <= -0.0001;
+		return aLHS.magnitude() - aRHS.magnitude() <= -gEpsilon;
 	}
 
-	return aLHS.direction() - aRHS.direction() <= -0.001;
+	return aLHS.direction() - aRHS.direction() <= -gEpsilon;
 }
 
 void Point2DSet::sort(Comparator aComparator) {
