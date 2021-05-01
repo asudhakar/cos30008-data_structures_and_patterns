@@ -4,6 +4,7 @@
 
 using namespace std;
 using Iterator = std::vector<Point2D>::const_iterator;
+
 static const double gEpsilon = 0.0001;
 
 void Point2DSet::add(const Point2D& aPoint) {

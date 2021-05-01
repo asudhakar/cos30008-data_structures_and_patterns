@@ -2,6 +2,7 @@
 #include <iostream>
 
 using namespace std;
+
 static const Point2D gCoordinateOrigin;
 static const double gEpsilon = 0.0001;
 
