@@ -11,7 +11,7 @@ void Point2DSet::add(const Point2D& aPoint) {
 }
 
 void Point2DSet::add(Point2D&& aPoint) {
-	fPoints.push_back(move(aPoint));
+	fPoints.push_back(aPoint);
 }
 
 void Point2DSet::removeLast() {
@@ -19,7 +19,7 @@ void Point2DSet::removeLast() {
 }
 
 bool Point2DSet::doesNotTurnLeft(const Point2D& aPoint) const {
-	return aPoint.isClockwise(fPoints[0], fPoints[1]);
+	return aPoint.isClockwise(fPoints[0], fPoints[2]);
 }
 
 void Point2DSet::populate(const std::string& aFileName) {
@@ -77,6 +77,25 @@ void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
 	{
 		cout << fPoints[i] << endl;
 	}
+
+	for (size_t i = 0; i < 3; i++)
+	{
+		aConvexHull.add(move(fPoints[i]));
+	}
+
+	cout << endl << "Convex Hull: " << endl;
+	lSize = aConvexHull.size();
+	for (size_t i = 0; i < lSize; i++)
+	{
+		cout << aConvexHull[i] << endl;
+	}
+	//for (size_t i = 3; i < size(); i++)
+	//{
+	//	while (doesNotTurnLeft(aConvexHull[i]))
+	//	{
+	//		aConvexHull.removeLast();
+	//	}
+	//}
 }
 
 size_t Point2DSet::size() const {
