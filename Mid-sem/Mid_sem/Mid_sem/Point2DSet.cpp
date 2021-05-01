@@ -51,10 +51,11 @@ void Point2DSet::sort(Comparator aComparator) {
 }
 
 void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
+	cout << endl << "Sorted by Coords: " << endl;
+
 	sort(orderByCoordinates);
 
 	size_t lSize = fPoints.size();
-
 	for (size_t i = 0; i < lSize; i++)
 	{
 		cout << fPoints[i] << endl;
@@ -65,13 +66,12 @@ void Point2DSet::buildConvexHull(Point2DSet& aConvexHull) {
 		point2D.setOrigin(fPoints[0]);
 	}
 
-	cout << endl << "New origin is: " << fPoints[10].getOrigin() << endl << endl;
-	fPoints.erase(begin());
+	cout << endl << "New origin is: " << fPoints[10].getOrigin() << endl;
+	cout << endl << "Sorted by Angle: " << endl;
 
 	sort(orderByPolarAngle);
 
 	lSize = fPoints.size();
-
 	for (size_t i = 0; i < lSize; i++)
 	{
 		cout << fPoints[i] << endl;

@@ -6,11 +6,13 @@ static const Point2D gCoordinateOrigin;
 static const double gEpsilon = 0.0001;
 
 double Point2D::directionTo(const Point2D& aOther) const {
-	return atan2(fPosition.getY() - aOther.getY(), fPosition.getX() - aOther.getX());
+	Vector2D lResult = *this - aOther;
+	return atan2(lResult.getY(), lResult.getX());
 }
 
 double Point2D::magnitudeTo(const Point2D& aOther) const {
-	return sqrt(pow(fPosition.getX() - aOther.getX(), 2) + pow(fPosition.getY() - aOther.getY(), 2));
+	Vector2D lResult = *this - aOther;
+	return sqrt(pow(lResult.getX(), 2) + pow(lResult.getY(), 2));
 }
 
 Point2D::Point2D() : fId(""), fPosition(0, 0), fOrigin(&gCoordinateOrigin) {
