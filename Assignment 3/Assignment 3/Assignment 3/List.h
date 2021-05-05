@@ -87,7 +87,7 @@ public:
     
 	// P1
 
-    List() : fRoot(new Node(nullptr)), fCount(0) {}                     // default constructor
+    List() : fRoot(nullptr), fCount(0) {}                               // default constructor
 
     bool isEmpty() const	                    						// Is list empty?
     {
@@ -96,33 +96,42 @@ public:
 
     size_t size() const                					    			// list size
     {
-        return fCount;
+        return sizeof(this);
     }
 
     void push_front(const T& aElement)	    			    			// adds aElement at front
     {
+        if (isEmpty()) {
+            fRoot = new Node(aElement);
+            return;
+        }
         Node* lNodeInsert = new Node(aElement);
-        lNodeInsert->push_front(*fRoot);
+        *fRoot->push_front(*lNodeInsert);
+        fRoot = lNodeInsert;
     }
 
     Iterator begin() const                       						// return a forward iterator
     {
-
+        Iterator iter(fRoot);
+        return iter.begin();
     }
 
     Iterator end() const                           						// return a forward end iterator
     {
-
+        Iterator iter(fRoot);
+        return iter.end();
     }
 
     Iterator rbegin() const                     						// return a backwards iterator
     {
-
+        Iterator iter(fRoot);
+        return iter.rbegin();
     }
 
     Iterator rend() const                      						    // return a backwards end iterator
     {
-
+        Iterator iter(fRoot);
+        return iter.rend();
     }
 
 	// P2

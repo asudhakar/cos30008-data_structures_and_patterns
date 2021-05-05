@@ -129,8 +129,8 @@ void testP4()
     // override list
     lList = copy;
     
-    lList.push_front( "AAAA" );
-    lList.push_back( "EEEE" );
+    lList.push_front( s1 );
+    lList.push_back( s5 );
     
     // iterate from the top
     cout << "B – Bottom to top " << lList.size() << " elements:" << endl;
