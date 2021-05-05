@@ -8,11 +8,11 @@
 
 using namespace std;
 
-//#define P1
+#define P1
 //#define P2
 //#define P3
 //#define P4
-#define P5
+//#define P5
 
 #ifdef P1
 
