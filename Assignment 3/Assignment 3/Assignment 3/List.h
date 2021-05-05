@@ -87,7 +87,7 @@ public:
     
 	// P1
 
-    List() : fRoot(nullptr), fCount(0) {}                               // default constructor
+    List() : fRoot(new Node(nullptr)), fCount(0) {}                     // default constructor
 
     bool isEmpty() const	                    						// Is list empty?
     {
@@ -101,7 +101,8 @@ public:
 
     void push_front(const T& aElement)	    			    			// adds aElement at front
     {
-        fRoot->push_front(aElement);
+        Node* lNodeInsert = new Node(aElement);
+        lNodeInsert->push_front(*fRoot);
     }
 
     Iterator begin() const                       						// return a forward iterator
@@ -126,7 +127,10 @@ public:
 
 	// P2
 
-	void push_back( const T& aElement );        						// adds aElement at back
+    void push_back(const T& aElement)              						// adds aElement at back
+    {
+        fRoot->push_back(aElement);
+    }
 
 	// P3
 
@@ -142,6 +146,12 @@ public:
 	// move features
 	List( List&& aOtherList );                 							// move constructor
 	List& operator=( List&& aOtherList );       						// move assignment operator
-	void push_front( T&& aElement );            						// adds aElement at front
-	void push_back( T&& aElement );             						// adds aElement at back
+    void push_front(T&& aElement)               						// adds aElement at front
+    {
+        fRoot->push_front(std::move(aElement));
+    }
+    void push_back(T&& aElement)               	    					// adds aElement at back
+    {
+        fRoot->push_back(std::move(aElement));
+    }
 };
