@@ -129,12 +129,19 @@ void testP4()
     
     // override list
     List<string> lNewList;
-    lList.push_front(s6);
-    lList.push_front(s6);
-    lList.push_front(s6);
+    lNewList.push_front(s6);
+    lNewList.push_front(s6);
+    lNewList.push_front(s6);
 
     lList = lNewList;
-    
+
+    cout << "B - Bottom to top " << lNewList.size() << " elements:" << endl;
+
+    for (auto iter = lNewList.rbegin(); iter != iter.rend(); iter--)
+    {
+        cout << *iter << endl;
+    }
+
     lList.push_front( s1 );
     lList.push_back( s5 );
     

@@ -7,6 +7,8 @@
 #include "DoublyLinkedListIterator.h"
 
 #include <stdexcept>
+#include <iostream>
+#include <string>
 
 using namespace std;
 template<typename T>
@@ -177,19 +179,29 @@ public:
             push_back(aOtherList[i]);
         }
     }
+
     List& operator=(const List& aOtherList)     						// assignment operator
     {
+        List<T> lTemp(aOtherList);
+        
+        //Node* node = new Node(aOtherList[0]);
+        //fRoot->swap(*node);
+
         Node* lCurrentNode = fRoot;
         int lCount = 0;
         while (lCurrentNode != nullptr)
         {
-            if (lCount == fCount)
+            if (lCount > fCount)
                 break;
-            Node* lTemp = new Node(aOtherList[lCount]);
-            lCurrentNode->swap(*lTemp);
+            Node* lNewNode = new Node(aOtherList[lCount]);
+            lCurrentNode->swap(lNewNode)
             lCount++;
             lCurrentNode = const_cast<Node*>(&lCurrentNode->getNext());
         }
+
+        //cout << aOtherList[0] << endl;
+        //cout << "node: " << node->getPayload() << endl;
+        //cout << "fRoot: " << fRoot->getPayload() << endl;
         return *this;
     }
     
