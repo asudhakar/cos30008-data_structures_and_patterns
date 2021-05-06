@@ -8,8 +8,8 @@
 
 using namespace std;
 
-#define P1
-//#define P2
+//#define P1
+#define P2
 //#define P3
 //#define P4
 //#define P5
@@ -93,9 +93,16 @@ void testP3()
     lList.push_back( s5 );
     lList.push_back( s6 );
 
-    cout << "Element at index 4: " << lList[4] << endl;
+    cout << "Bottom to top" << lList.size() << " elements:" << endl;
+    for (List<string>::Iterator iter = lList.rbegin();
+        iter != iter.rend(); iter--)
+    {
+        cout << *iter << endl;
+    }
+
+    cout << "Element at index 4: " << lList[3] << endl;
     lList.remove( s5 );
-    cout << "Element at index 4: " << lList[4] << endl;
+    cout << "Element at index 4: " << lList[3] << endl;
 }
 
 #endif

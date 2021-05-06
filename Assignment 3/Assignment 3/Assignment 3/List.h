@@ -7,7 +7,9 @@
 #include "DoublyLinkedListIterator.h"
 
 #include <stdexcept>
+#include <string>
 
+using namespace std;
 template<typename T>
 class List
 {
@@ -87,7 +89,7 @@ public:
     
 	// P1
 
-    List() : fRoot(nullptr), fCount(0) {}                               // default constructor
+    List() : fRoot(nullptr), fCount(size()) {}                          // default constructor
 
     bool isEmpty() const	                    						// Is list empty?
     {
@@ -101,6 +103,7 @@ public:
 
     void push_front(const T& aElement)	    			    			// adds aElement at front
     {
+        cout << fCount << endl;
         if (isEmpty()) {
             fRoot = new Node(aElement);
             return;
@@ -138,12 +141,34 @@ public:
 
     void push_back(const T& aElement)              						// adds aElement at back
     {
-        fRoot->push_back(aElement);
+        cout << "push_back: " << fCount << endl;
+        if (isEmpty()) {
+            fRoot = new Node(aElement);
+            return;
+        }
+        Node* lNodeInsert = new Node(aElement);
+        const_cast<Node*>(&fRoot->getPrevious())->push_back(*lNodeInsert);
     }
 
 	// P3
 
-	const T& operator[]( size_t aIndex ) const;							// list indexer
+    const T& operator[](size_t aIndex) const							// list indexer
+    {
+        cout << "[] " << fCount << endl;
+        if (aIndex > fCount) {
+            throw std::out_of_range("Index is out of range.");
+        }
+
+        Node* lCurrentNode = fRoot;
+        int lCount = 0;
+        while (lCurrentNode != nullptr)
+        {
+            if (lCount == aIndex)
+                return lCurrentNode->getPayload();
+            lCount++;
+            lCurrentNode = const_cast<Node*>(&lCurrentNode->getNext());
+        }
+    }
 
 	// P4
 	
@@ -157,10 +182,10 @@ public:
 	List& operator=( List&& aOtherList );       						// move assignment operator
     void push_front(T&& aElement)               						// adds aElement at front
     {
-        fRoot->push_front(std::move(aElement));
+        push_front(std::move(aElement));
     }
     void push_back(T&& aElement)               	    					// adds aElement at back
     {
-        fRoot->push_back(std::move(aElement));
+        push_back(std::move(aElement));
     }
 };
