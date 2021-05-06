@@ -7,7 +7,6 @@
 #include "DoublyLinkedListIterator.h"
 
 #include <stdexcept>
-#include <string>
 
 using namespace std;
 template<typename T>
@@ -89,7 +88,7 @@ public:
     
 	// P1
 
-    List() : fRoot(nullptr), fCount(size()) {}                          // default constructor
+    List() : fRoot(nullptr), fCount(0) {}                          // default constructor
 
     bool isEmpty() const	                    						// Is list empty?
     {
@@ -98,12 +97,11 @@ public:
 
     size_t size() const                					    			// list size
     {
-        return sizeof(this);
+        return fCount + 1;
     }
 
     void push_front(const T& aElement)	    			    			// adds aElement at front
     {
-        cout << fCount << endl;
         if (isEmpty()) {
             fRoot = new Node(aElement);
             return;
@@ -111,6 +109,7 @@ public:
         Node* lNodeInsert = new Node(aElement);
         *fRoot->push_front(*lNodeInsert);
         fRoot = lNodeInsert;
+        fCount++;
     }
 
     Iterator begin() const                       						// return a forward iterator
@@ -141,22 +140,21 @@ public:
 
     void push_back(const T& aElement)              						// adds aElement at back
     {
-        cout << "push_back: " << fCount << endl;
         if (isEmpty()) {
             fRoot = new Node(aElement);
             return;
         }
         Node* lNodeInsert = new Node(aElement);
         const_cast<Node*>(&fRoot->getPrevious())->push_back(*lNodeInsert);
+        fCount++;
     }
 
 	// P3
 
     const T& operator[](size_t aIndex) const							// list indexer
     {
-        cout << "[] " << fCount << endl;
         if (aIndex > fCount) {
-            throw std::out_of_range("Index is out of range.");
+            throw range_error("Index is out of range.");
         }
 
         Node* lCurrentNode = fRoot;
@@ -171,9 +169,29 @@ public:
     }
 
 	// P4
-	
-	List( const List& aOtherList );             						// copy constructor
-	List& operator=( const List& aOtherList );  						// assignment operator
+    // copy constructor
+    List(const List& aOtherList) : fRoot(nullptr), fCount(0) 
+    {
+        for (size_t i = 0; i < aOtherList.size(); i++)
+        {
+            push_back(aOtherList[i]);
+        }
+    }
+    List& operator=(const List& aOtherList)     						// assignment operator
+    {
+        Node* lCurrentNode = fRoot;
+        int lCount = 0;
+        while (lCurrentNode != nullptr)
+        {
+            if (lCount == fCount)
+                break;
+            Node* lTemp = new Node(aOtherList[lCount]);
+            lCurrentNode->swap(*lTemp);
+            lCount++;
+            lCurrentNode = const_cast<Node*>(&lCurrentNode->getNext());
+        }
+        return *this;
+    }
     
 	// P5X
 

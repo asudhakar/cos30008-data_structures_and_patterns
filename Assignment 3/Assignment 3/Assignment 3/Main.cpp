@@ -9,9 +9,9 @@
 using namespace std;
 
 //#define P1
-#define P2
+//#define P2
 //#define P3
-//#define P4
+#define P4
 //#define P5
 
 #ifdef P1
@@ -93,16 +93,9 @@ void testP3()
     lList.push_back( s5 );
     lList.push_back( s6 );
 
-    cout << "Bottom to top" << lList.size() << " elements:" << endl;
-    for (List<string>::Iterator iter = lList.rbegin();
-        iter != iter.rend(); iter--)
-    {
-        cout << *iter << endl;
-    }
-
-    cout << "Element at index 4: " << lList[3] << endl;
+    cout << "Element at index 4: " << lList[4] << endl;
     lList.remove( s5 );
-    cout << "Element at index 4: " << lList[3] << endl;
+    cout << "Element at index 4: " << lList[4] << endl;
 }
 
 #endif
@@ -116,7 +109,8 @@ void testP4()
     string s3( "CCCC" );
     string s4( "DDDD" );
     string s5( "EEEE" );
-    
+    string s6( "TTTT" );
+
     List<string> lList;
     
     lList.push_front( s4 );
@@ -134,13 +128,18 @@ void testP4()
     }
     
     // override list
-    lList = copy;
+    List<string> lNewList;
+    lList.push_front(s6);
+    lList.push_front(s6);
+    lList.push_front(s6);
+
+    lList = lNewList;
     
     lList.push_front( s1 );
     lList.push_back( s5 );
     
     // iterate from the top
-    cout << "B – Bottom to top " << lList.size() << " elements:" << endl;
+    cout << "B - Bottom to top " << lList.size() << " elements:" << endl;
     
     for ( auto iter = lList.rbegin(); iter != iter.rend(); iter-- )
     {
