@@ -183,25 +183,31 @@ public:
     List& operator=(const List& aOtherList)     						// assignment operator
     {
         List<T> lTemp(aOtherList);
-        
-        //Node* node = new Node(aOtherList[0]);
-        //fRoot->swap(*node);
 
         Node* lCurrentNode = fRoot;
-        int lCount = 0;
+        size_t lCount = 0;
+        size_t lMax = size() >= aOtherList.size() ? size() : aOtherList.size();
+
         while (lCurrentNode != nullptr)
         {
-            if (lCount > fCount)
+            if (lCount == lMax)
                 break;
-            Node* lNewNode = new Node(aOtherList[lCount]);
-            lCurrentNode->swap(lNewNode)
+
+            if (lCount > fCount) {                                      // add new nodes if short on nodes
+                push_back(aOtherList[lCount]);
+            }
+            else if (lCount > aOtherList.size() - 1) {                  // remove nodes if there are excess
+                remove(lCurrentNode->getPayload());
+            }
+            else {
+                Node* lNewNode = new Node(aOtherList[lCount]);          // swap payloads if on same position
+                lCurrentNode->swap(*lNewNode);
+            }
+
             lCount++;
             lCurrentNode = const_cast<Node*>(&lCurrentNode->getNext());
         }
 
-        //cout << aOtherList[0] << endl;
-        //cout << "node: " << node->getPayload() << endl;
-        //cout << "fRoot: " << fRoot->getPayload() << endl;
         return *this;
     }
     
