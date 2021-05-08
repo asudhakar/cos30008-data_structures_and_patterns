@@ -7,8 +7,6 @@
 #include "DoublyLinkedListIterator.h"
 
 #include <stdexcept>
-#include <iostream>
-#include <string>
 
 using namespace std;
 template<typename T>
@@ -90,7 +88,9 @@ public:
     
 	// P1
 
-    List() : fRoot(nullptr), fCount(0) {}                          // default constructor
+    List() : 
+        fRoot(nullptr), 
+        fCount(0) {}                                                    // default constructor
 
     bool isEmpty() const	                    						// Is list empty?
     {
@@ -155,9 +155,8 @@ public:
 
     const T& operator[](size_t aIndex) const							// list indexer
     {
-        if (aIndex > fCount) {
+        if (aIndex > fCount)
             throw range_error("Index is out of range.");
-        }
 
         Node* lCurrentNode = fRoot;
         int lCount = 0;
@@ -172,41 +171,21 @@ public:
 
 	// P4
     // copy constructor
-    List(const List& aOtherList) : fRoot(nullptr), fCount(0) 
+    List(const List& aOtherList) : 
+        fRoot(nullptr), 
+        fCount(0) 
     {
         for (size_t i = 0; i < aOtherList.size(); i++)
-        {
             push_back(aOtherList[i]);
-        }
     }
 
     List& operator=(const List& aOtherList)     						// assignment operator
     {
-        List<T> lTemp(aOtherList);
+        for (size_t i = 0; i < size(); i++)
+            remove(operator[](i));
 
-        Node* lCurrentNode = fRoot;
-        size_t lCount = 0;
-        size_t lMax = size() >= aOtherList.size() ? size() : aOtherList.size();
-
-        while (lCurrentNode != nullptr)
-        {
-            if (lCount == lMax)
-                break;
-
-            if (lCount > fCount) {                                      // add new nodes if short on nodes
-                push_back(aOtherList[lCount]);
-            }
-            else if (lCount > aOtherList.size() - 1) {                  // remove nodes if there are excess
-                remove(lCurrentNode->getPayload());
-            }
-            else {
-                Node* lNewNode = new Node(aOtherList[lCount]);          // swap payloads if on same position
-                lCurrentNode->swap(*lNewNode);
-            }
-
-            lCount++;
-            lCurrentNode = const_cast<Node*>(&lCurrentNode->getNext());
-        }
+        for (size_t i = 0; i < aOtherList.size(); i++)
+            push_back(aOtherList[i]);
 
         return *this;
     }
@@ -214,14 +193,27 @@ public:
 	// P5X
 
 	// move features
-	List( List&& aOtherList );                 							// move constructor
-	List& operator=( List&& aOtherList );       						// move assignment operator
+    List(List&& aOtherList) : 
+        fRoot(nullptr),
+        fCount(0)    	                                                // move constructor
+    {
+        for (size_t i = 0; i < aOtherList.size(); i++)
+            push_back(aOtherList[i]);
+    }
+
+    List& operator=(List&& aOtherList)           						// move assignment operator
+    {
+        operator=(aOtherList);
+        return *this;
+    }
+
     void push_front(T&& aElement)               						// adds aElement at front
     {
-        push_front(std::move(aElement));
+        push_front(aElement);
     }
-    void push_back(T&& aElement)               	    					// adds aElement at back
+
+    void push_back(T&& aElement)                	    				// adds aElement at back
     {
-        push_back(std::move(aElement));
+        push_back(aElement);
     }
 };
