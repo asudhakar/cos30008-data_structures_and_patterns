@@ -100,7 +100,7 @@ struct BNode
 
 	~BNode() {
         if (!empty())
-            remove(key, this);
+            remove(NULL, this);
     }
     
     bool empty() const {
