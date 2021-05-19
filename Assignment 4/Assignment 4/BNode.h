@@ -98,7 +98,7 @@ struct BNode
     }
 
 	~BNode() {
-        remove(key, &this);
+        remove(key, this);
     }
     
     bool empty() const {
@@ -113,10 +113,10 @@ struct BNode
         size_t lRightHeight = -1;
 
         if (!left->empty())
-            lLeftHeight = left.height();
+            lLeftHeight = left->height();
 
         if (!right->empty())
-            lRightHeight = right.height();
+            lRightHeight = right->height();
 
         return max(lLeftHeight, lRightHeight) + 1;
     }
@@ -127,7 +127,7 @@ struct BNode
 
         BNode<S>* x = this;
         if (x == &NIL) {
-            x.key = aKey;
+            x->key = aKey;
             x->left = new BNode();
             x->right = new BNode();
         }
