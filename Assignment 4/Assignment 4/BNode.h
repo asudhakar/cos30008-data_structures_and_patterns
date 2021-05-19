@@ -4,6 +4,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <iostream>
 
 template<typename S>
 struct BNode
@@ -102,10 +103,10 @@ struct BNode
     }
     
     bool empty() const {
-        return this == &NIL;
+        return key == NULL;
     }
     bool leaf() const {
-        return left == right == &NIL;
+        return !empty() && left == right == &NIL;
     }
 
     size_t height() const {
@@ -123,19 +124,18 @@ struct BNode
 
     bool insert(const S& aKey) {
         bool var = aKey == key || empty();
-        if (aKey == key || this == &NIL)
+        if (aKey == key || empty()) {
+            cout << "insert" << endl;
             return false;
 
-        if (key == NULL) {
-            key = aKey;
-            left = right = &NIL;
         }
-        else if (aKey < key) {
-            left->insert(aKey);
-        }
-        else {
-            right->insert(aKey);
-        }
+
+        BNode<S>* x = this;
+        while (x != leaf())
+            x = aKey < x->key ? x->left : x->right;
+
+        x = new BNode(aKey);
+
         return true;
     }
 };
