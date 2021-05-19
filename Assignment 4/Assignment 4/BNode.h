@@ -99,14 +99,15 @@ struct BNode
     }
 
 	~BNode() {
-        remove(key, this);
+        if (!empty())
+            remove(key, this);
     }
     
     bool empty() const {
-        return key == NULL;
+        return this == &NIL;
     }
     bool leaf() const {
-        return !empty() && left == right == &NIL;
+        return left == &NIL && right == &NIL;
     }
 
     size_t height() const {
@@ -123,18 +124,27 @@ struct BNode
     }
 
     bool insert(const S& aKey) {
-        bool var = aKey == key || empty();
-        if (aKey == key || empty()) {
-            cout << "insert" << endl;
+        if (aKey == key) {
+            cout << "dupes" << endl;
             return false;
+        }
 
+        if (empty()) {
+            cout << "empty" << endl;
+            return false;
         }
 
         BNode<S>* x = this;
-        while (x != leaf())
-            x = aKey < x->key ? x->left : x->right;
-
-        x = new BNode(aKey);
+        if (leaf()) {
+            if (aKey < key)
+                x->left = new BNode(aKey);
+            else
+                x->right = new BNode(aKey);
+        }
+        else if (aKey < key)
+            left->insert(aKey);
+        else
+            right->insert(aKey);
 
         return true;
     }
