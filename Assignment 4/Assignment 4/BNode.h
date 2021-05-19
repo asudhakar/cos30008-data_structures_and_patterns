@@ -102,7 +102,7 @@ struct BNode
     }
     
     bool empty() const {
-        return key == NULL;
+        return this == &NIL;
     }
     bool leaf() const {
         return left == right == &NIL;
@@ -122,24 +122,20 @@ struct BNode
     }
 
     bool insert(const S& aKey) {
+        bool var = aKey == key || empty();
         if (aKey == key || this == &NIL)
             return false;
 
         if (key == NULL) {
             key = aKey;
-            left = new BNode();
-            right = new BNode();
+            left = right = &NIL;
         }
-
-        BNode<S>* x = this;
-        while (!x->empty())
-        {
-            if (aKey == x->key)
-                break;
-
-            x = aKey < x->key ? x->left : x->right;
+        else if (aKey < key) {
+            left->insert(aKey);
         }
-
+        else {
+            right->insert(aKey);
+        }
         return true;
     }
 };
