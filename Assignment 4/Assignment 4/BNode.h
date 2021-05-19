@@ -124,29 +124,20 @@ struct BNode
     }
 
     bool insert(const S& aKey) {
-        if (aKey == key) {
-            cout << "dupes" << endl;
+        if (aKey == key || empty())
             return false;
-        }
-
-        if (empty()) {
-            cout << "empty" << endl;
-            return false;
-        }
 
         BNode<S>* x = this;
-        if (leaf()) {
-            if (aKey < key)
-                x->left = new BNode(aKey);
-            else
-                x->right = new BNode(aKey);
+        if (aKey < key) {
+            if (!x->left->empty())
+                return x->left->insert(aKey);
+            x->left = new BNode(aKey);
         }
-        else if (aKey < key)
-            left->insert(aKey);
-        else
-            right->insert(aKey);
-
-        return true;
+        else {
+            if (!x->right->empty())
+                return x->right->insert(aKey);
+            x->right = new BNode(aKey);
+        }
     }
 };
 
