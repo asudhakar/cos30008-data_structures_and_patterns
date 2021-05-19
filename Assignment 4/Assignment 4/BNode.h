@@ -122,16 +122,16 @@ struct BNode
     }
 
     bool insert(const S& aKey) {
-        if (aKey == key)
+        if (aKey == key || this == &NIL)
             return false;
 
-        BNode<S>* x = this;
-        if (x == &NIL) {
-            x->key = aKey;
-            x->left = new BNode();
-            x->right = new BNode();
+        if (key == NULL) {
+            key = aKey;
+            left = new BNode();
+            right = new BNode();
         }
 
+        BNode<S>* x = this;
         while (!x->empty())
         {
             if (aKey == x->key)
