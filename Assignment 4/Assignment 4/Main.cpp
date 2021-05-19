@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//#define P1
+#define P1
 //#define P2
 //#define P3
 
@@ -134,22 +134,22 @@ void testIterator()
 int main()
 {
 #ifdef P1
-    
+
     testBNode();
-    
+
 #endif
 
 #ifdef P2
-        
+
     testBinarySearchTree();
-        
+
 #endif
 
 #ifdef P3
-            
+
     testIterator();
-            
+
 #endif
 
     return 0;
-}
+};

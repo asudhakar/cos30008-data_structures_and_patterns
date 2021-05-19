@@ -90,18 +90,58 @@ struct BNode
     
 	// PS4 starts here
     
-	BNode();
-	BNode( const S& aKey );
-	BNode( S&& aKey );
+    BNode() : key(NULL), left(&NIL), right(&NIL) {
+    }
+    BNode(const S& aKey) : key(aKey), left(&NIL), right(&NIL) {
+    }
+    BNode(S&& aKey) : key(aKey), left(&NIL), right(&NIL) {
+    }
 
-	~BNode();
+	~BNode() {
+        remove(key, &this);
+    }
     
-	bool empty() const;
-	bool leaf() const;
+    bool empty() const {
+        return key == NULL;
+    }
+    bool leaf() const {
+        return left == right == &NIL;
+    }
 
-	size_t height() const;
+    size_t height() const {
+        size_t lLeftHeight = -1;
+        size_t lRightHeight = -1;
 
-	bool insert( const S& aKey );
+        if (!left->empty())
+            lLeftHeight = left.height();
+
+        if (!right->empty())
+            lRightHeight = right.height();
+
+        return max(lLeftHeight, lRightHeight) + 1;
+    }
+
+    bool insert(const S& aKey) {
+        if (aKey == key)
+            return false;
+
+        BNode<S>* x = this;
+        if (x == &NIL) {
+            x.key = aKey;
+            x->left = new BNode();
+            x->right = new BNode();
+        }
+
+        while (!x->empty())
+        {
+            if (aKey == x->key)
+                break;
+
+            x = aKey < x->key ? x->left : x->right;
+        }
+
+        return true;
+    }
 };
 
 template<typename S>
