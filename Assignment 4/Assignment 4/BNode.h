@@ -91,7 +91,7 @@ struct BNode
     
 	// PS4 starts here
     
-    BNode() : key(NULL), left(&NIL), right(&NIL) {
+    BNode() : key(S()), left(&NIL), right(&NIL) {
     }
     BNode(const S& aKey) : key(aKey), left(&NIL), right(&NIL) {
     }
@@ -99,8 +99,7 @@ struct BNode
     }
 
 	~BNode() {
-        if (!empty())
-            remove(NULL, this);
+        remove(NULL, this);
     }
     
     bool empty() const {
@@ -111,33 +110,26 @@ struct BNode
     }
 
     size_t height() const {
-        size_t lLeftHeight = -1;
-        size_t lRightHeight = -1;
-
-        if (!left->empty())
-            lLeftHeight = left->height();
-
-        if (!right->empty())
-            lRightHeight = right->height();
-
-        return max(lLeftHeight, lRightHeight) + 1;
+        if (leaf())
+            return 0;
+        return max(left->height(), right->height()) + 1;
     }
 
     bool insert(const S& aKey) {
         if (aKey == key || empty())
             return false;
 
-        BNode<S>* x = this;
         if (aKey < key) {
-            if (!x->left->empty())
-                return x->left->insert(aKey);
-            x->left = new BNode(aKey);
+            if (!left->empty())
+                return left->insert(aKey);
+            left = new BNode(aKey);
         }
         else {
-            if (!x->right->empty())
-                return x->right->insert(aKey);
-            x->right = new BNode(aKey);
+            if (!right->empty())
+                return right->insert(aKey);
+            right = new BNode(aKey);
         }
+        return true;
     }
 };
 
