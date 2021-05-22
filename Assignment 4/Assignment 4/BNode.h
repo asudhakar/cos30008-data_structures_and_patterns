@@ -95,7 +95,7 @@ struct BNode
     }
     BNode(const S& aKey) : key(aKey), left(&NIL), right(&NIL) {
     }
-    BNode(S&& aKey) : key(aKey), left(&NIL), right(&NIL) {
+    BNode(S&& aKey) : key(std::move(aKey)), left(&NIL), right(&NIL) {
     }
 
 	~BNode() {
