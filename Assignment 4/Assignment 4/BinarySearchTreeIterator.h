@@ -4,7 +4,6 @@
 #pragma once
 
 #include <stack>
-#include <iostream>
 
 #include "BNode.h"
 
@@ -26,10 +25,12 @@ public:
 		{
 			fStack.push(fBNodeTree);
 
-			while (!fStack.top()->left->empty())
+			while (!fStack.top()->left->empty()) {
 				fStack.push(fStack.top()->left);
+				fBNodeTree = fBNodeTree->left;
+			}
+			fStack.pop();
 		}
-		std::cout << fStack.top() << endl;
 	}
 
 	const T& operator*() const {
@@ -37,33 +38,25 @@ public:
 	}
 
 	Iterator& operator++() {
-		/*
-		If the current node has a non-null right child,
-			Take a step down to the right
-			Then run down to the left as far as possible
-
-		If the current node has a null right child,
-			move up the tree until we have moved over a left child link*/
-
-		if (!fBNodeTree->empty() || !fStack.empty())
-		{
-			while (fBNodeTree != NULL)
-			{
-				fStack.push(fBNodeTree);
-				fBNodeTree = fBNodeTree->left;
-			}
-
+		if (fStack.empty())
+			fBNodeTree = &BNode<T>::NIL;
+		
+		else {
 			fBNodeTree = fStack.top();
 			fStack.pop();
-
-			std::cout << fBNodeTree->key << " ";
-			fBNodeTree = fBNodeTree->right;
+			if (!fBNodeTree->right->empty()) {
+				fStack.push(fBNodeTree->right);
+				while (!fStack.top()->left->empty())
+					fStack.push(fStack.top()->left);
+			}
 		}
+
 		return *this;
 	}
 	Iterator operator++(int) {
-		Iterator iter = *this;
-		return iter;
+		Iterator temp = Iterator(*this);
+		++(*this);
+		return temp;
 	}
 
 	bool operator==(const Iterator& aOtherIter) const {
@@ -74,7 +67,7 @@ public:
 	}
     
 	Iterator begin() const {
-		return Iterator(fBNodeTree->findMin());
+		return Iterator(fStack.top());
 	}
 	Iterator end() const {
 		return Iterator(&BNode<T>::NIL);

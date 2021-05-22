@@ -97,7 +97,7 @@ void testBinarySearchTree()
  
 #include "BinarySearchTreeIterator.h"
 #include "BinarySearchTree.h"
-
+#include <vector>
 void testIterator()
 {
     cout << "Test Binary Search Tree Iterator DFS" << endl;
@@ -122,7 +122,8 @@ void testIterator()
     for ( const int& i : lTree )
     {
         cout << " " << i;
-    }
+    }    
+
 
     cout << endl;
 
