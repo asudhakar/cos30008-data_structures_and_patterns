@@ -23,33 +23,33 @@ public:
 	{
 		if (!fBNodeTree->empty())
 		{
-			fStack.push(fBNodeTree);
+			const BNode<T>* lNode = fBNodeTree;
+			fStack.push(lNode);
 
-			while (!fStack.top()->left->empty()) {
+			while (!lNode->left->empty()) {
 				fStack.push(fStack.top()->left);
-				fBNodeTree = fBNodeTree->left;
+				lNode = lNode->left;
 			}
-			fStack.pop();
 		}
 	}
 
 	const T& operator*() const {
-		return fBNodeTree->key;
+		return fStack.top()->key;
 	}
 
 	Iterator& operator++() {
-		if (fStack.empty())
-			fBNodeTree = &BNode<T>::NIL;
-		
-		else {
-			fBNodeTree = fStack.top();
+		if (!fStack.empty()) {
+			const BNode<T>* lNode = fStack.top();
 			fStack.pop();
-			if (!fBNodeTree->right->empty()) {
-				fStack.push(fBNodeTree->right);
+			if (!lNode->right->empty()) {
+				fStack.push(lNode->right);
 				while (!fStack.top()->left->empty())
 					fStack.push(fStack.top()->left);
 			}
 		}
+
+		if (fStack.empty())
+			fStack.push(&BNode<T>::NIL);
 
 		return *this;
 	}
@@ -60,14 +60,14 @@ public:
 	}
 
 	bool operator==(const Iterator& aOtherIter) const {
-		return fBNodeTree->key == aOtherIter.fBNodeTree->key;
+		return fStack.top()->key == aOtherIter.fBNodeTree->key;
 	}
 	bool operator!=(const Iterator& aOtherIter) const {
-		return fBNodeTree->key != aOtherIter.fBNodeTree->key;
+		return fStack.top()->key != aOtherIter.fBNodeTree->key;
 	}
     
 	Iterator begin() const {
-		return Iterator(fStack.top());
+		return Iterator(fBNodeTree);
 	}
 	Iterator end() const {
 		return Iterator(&BNode<T>::NIL);

@@ -124,7 +124,6 @@ void testIterator()
         cout << " " << i;
     }    
 
-
     cout << endl;
 
     cout << "Test Binary Search Tree Iterator DFS completed." << endl;
