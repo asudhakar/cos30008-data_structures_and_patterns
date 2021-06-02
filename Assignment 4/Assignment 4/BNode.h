@@ -4,7 +4,6 @@
 #pragma once
 
 #include <stdexcept>
-#include <iostream>
 
 template<typename S>
 struct BNode
