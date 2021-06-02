@@ -62,7 +62,8 @@ private:
 
 	// remove a subtree, may through a domain error
     const TTree<T> &removeSubTree(TTree<T> **aBranch) {
-
+        if (aBranch)
+        return *this;
     }
     
 public:
@@ -78,14 +79,14 @@ public:
     
     // destructor (free sub-trees, must not free empty trees)
     ~TTree() {
-        if (!empty)
+        if (!empty())
             delete this;
     }
     
     // return key value, may throw domain_error if empty
     const T &operator*() const {
-        if (empty)
-            throw(domain_error);
+        if (empty())
+            throw std::domain_error("Empty TTree encountered.");
         return fKey;
     }
 
@@ -96,30 +97,65 @@ public:
 
     // returns true if this TTree is a leaf
     bool leaf() const {
-        return fLeft->empty() && fMiddle->empty() fRight->empty();
+        return fLeft->empty() && fMiddle->empty() && fRight->empty();
     }
     
 // Problem 2: TTree Copy Semantics
     
     // copy constructor, must not copy empty TTree
-	TTree( const TTree<T>& aOtherTTree );
+    TTree(const TTree<T> &aOtherTTree) {
+        if (!aOtherTTree.empty())
+            addSubTree(this, aOtherTTree);
+    }
 
     // copy assignment operator, must not copy empty TTree
-	TTree<T>& operator=( const TTree<T>& aOtherTTree );
+    TTree<T> &operator=(const TTree<T> &aOtherTTree) {
+        if (this != aOtherTTree) {
+            //delete
+            delete this;
+            //copy
+            addSubTree(this, aOtherTTree);
+        }
+        return *this;
+    }
     
     // clone TTree, must not copy empty trees
-	TTree<T>* clone() const;
+    TTree<T> *clone() const {
+        return new TTree(*this);
+    }
 
 // Problem 3: TTree Move Semantics
 
     // TTree r-value constructor
-	TTree( T&& aKey );
+    TTree(T &&aKey) : 
+        fKey(std::move(aKey))
+    {
+        fLeft = &NIL;       // loop-back: The sub-trees of a TTree object with
+        fMiddle = &NIL;     //            no children point to NIL.
+        fRight = &NIL;
+    }
 
     // move constructor, must not copy empty TTree
-	TTree( TTree<T>&& aOtherTTree );
+    TTree(TTree<T> &&aOtherTTree) :
+        fKey(*aOtherTTree)
+    {
+        aOtherTTree = nullptr;
+        fLeft = &NIL;       // loop-back: The sub-trees of a TTree object with
+        fMiddle = &NIL;     //            no children point to NIL.
+        fRight = &NIL;
+    }
 
     // move assignment operator, must not copy empty TTree
-	TTree<T>& operator=( TTree<T>&& aOtherTTree );
+    TTree<T> &operator=(TTree<T> &&aOtherTTree) {
+        if (this != aOtherTTree) {
+            //delete
+            delete this;
+            //copy
+            this = aOtherTTree;
+            aOtherTTree = nullptr;
+        }
+        return *this;
+    }
     
 // Problem 4: TTree Postfix Iterator
 
