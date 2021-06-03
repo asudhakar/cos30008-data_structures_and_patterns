@@ -53,7 +53,9 @@ private:
 	TTreePostfixIterator( const TTree<T>* aTTree );
 
 	// iterator dereference
-	const T& operator*() const;
+    const T &operator*() const {
+        return fStack.top()
+    }
 
     // prefix increment
 	Iterator& operator++();

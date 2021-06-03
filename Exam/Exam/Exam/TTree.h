@@ -62,7 +62,10 @@ private:
 
 	// remove a subtree, may through a domain error
     const TTree<T> &removeSubTree(TTree<T> **aBranch) {
-        if (aBranch)
+        if (!(*aBranch)->empty())
+        {
+            delete *aBranch;
+        }
         return *this;
     }
     
@@ -79,8 +82,11 @@ public:
     
     // destructor (free sub-trees, must not free empty trees)
     ~TTree() {
-        if (!empty())
-            delete this;
+        if (!empty()) {
+            removeLeft();
+            removeMiddle();
+            removeRight();
+        }
     }
     
     // return key value, may throw domain_error if empty
@@ -104,24 +110,32 @@ public:
     
     // copy constructor, must not copy empty TTree
     TTree(const TTree<T> &aOtherTTree) {
-        if (!aOtherTTree.empty())
-            addSubTree(this, aOtherTTree);
+        if (!aOtherTTree.empty()) {
+            fKey = *aOtherTTree;
+            addLeft(aOtherTTree);
+            addMiddle(aOtherTTree);
+            addRight(aOtherTTree);
+        }
     }
 
     // copy assignment operator, must not copy empty TTree
     TTree<T> &operator=(const TTree<T> &aOtherTTree) {
-        if (this != aOtherTTree) {
+        if (**this != *aOtherTTree) {
             //delete
             delete this;
             //copy
-            addSubTree(this, aOtherTTree);
+            fKey = *aOtherTTree;
+            addLeft(aOtherTTree);
+            addMiddle(aOtherTTree);
+            addRight(aOtherTTree);
         }
         return *this;
     }
     
     // clone TTree, must not copy empty trees
     TTree<T> *clone() const {
-        return new TTree(*this);
+        if (!empty())
+            return new TTree(*this);
     }
 
 // Problem 3: TTree Move Semantics
@@ -147,12 +161,14 @@ public:
 
     // move assignment operator, must not copy empty TTree
     TTree<T> &operator=(TTree<T> &&aOtherTTree) {
-        if (this != aOtherTTree) {
+        if (**this != *aOtherTTree) {
             //delete
             delete this;
             //copy
-            this = aOtherTTree;
-            aOtherTTree = nullptr;
+            fKey = *aOtherTTree;
+            addLeft(aOtherTTree);
+            addMiddle(aOtherTTree);
+            addRight(aOtherTTree);
         }
         return *this;
     }
