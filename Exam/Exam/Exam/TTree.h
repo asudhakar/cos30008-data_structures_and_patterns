@@ -83,9 +83,9 @@ public:
     // destructor (free sub-trees, must not free empty trees)
     ~TTree() {
         if (!empty()) {
-            removeLeft();
-            removeMiddle();
-            removeRight();
+            delete fLeft;
+            delete fMiddle;
+            delete fRight;
         }
     }
     
@@ -109,12 +109,13 @@ public:
 // Problem 2: TTree Copy Semantics
     
     // copy constructor, must not copy empty TTree
-    TTree(const TTree<T> &aOtherTTree) {
+    TTree(const TTree<T> &aOtherTTree) :
+        fKey(*aOtherTTree)
+    {
         if (!aOtherTTree.empty()) {
-            fKey = *aOtherTTree;
-            addLeft(aOtherTTree);
-            addMiddle(aOtherTTree);
-            addRight(aOtherTTree);
+            addLeft(aOtherTTree.getLeft());
+            addMiddle(aOtherTTree.getMiddle());
+            addRight(aOtherTTree.getRight());
         }
     }
 
@@ -125,9 +126,9 @@ public:
             delete this;
             //copy
             fKey = *aOtherTTree;
-            addLeft(aOtherTTree);
-            addMiddle(aOtherTTree);
-            addRight(aOtherTTree);
+            addLeft(aOtherTTree.getLeft());
+            addMiddle(aOtherTTree.getMiddle());
+            addRight(aOtherTTree.getRight());
         }
         return *this;
     }
@@ -166,9 +167,9 @@ public:
             delete this;
             //copy
             fKey = *aOtherTTree;
-            addLeft(aOtherTTree);
-            addMiddle(aOtherTTree);
-            addRight(aOtherTTree);
+            addLeft(aOtherTTree.getLeft());
+            addMiddle(aOtherTTree.getMiddle());
+            addRight(aOtherTTree.getRight());
         }
         return *this;
     }
