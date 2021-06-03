@@ -64,7 +64,7 @@ private:
     const TTree<T> &removeSubTree(TTree<T> **aBranch) {
         if (!(*aBranch)->empty())
         {
-            delete *aBranch;
+            *aBranch = &NIL;
         }
         return *this;
     }
@@ -83,9 +83,9 @@ public:
     // destructor (free sub-trees, must not free empty trees)
     ~TTree() {
         if (!empty()) {
-            delete fLeft;
-            delete fMiddle;
-            delete fRight;
+            removeLeft();
+            removeMiddle();
+            removeRight();
         }
     }
     
@@ -142,23 +142,10 @@ public:
 // Problem 3: TTree Move Semantics
 
     // TTree r-value constructor
-    TTree(T &&aKey) : 
-        fKey(std::move(aKey))
-    {
-        fLeft = &NIL;       // loop-back: The sub-trees of a TTree object with
-        fMiddle = &NIL;     //            no children point to NIL.
-        fRight = &NIL;
-    }
+    TTree(T &&aKey) : fKey(std::move(aKey)), fLeft(&NIL), fMiddle(&NIL), fRight(&NIL) {}
 
     // move constructor, must not copy empty TTree
-    TTree(TTree<T> &&aOtherTTree) :
-        fKey(*aOtherTTree)
-    {
-        aOtherTTree = nullptr;
-        fLeft = &NIL;       // loop-back: The sub-trees of a TTree object with
-        fMiddle = &NIL;     //            no children point to NIL.
-        fRight = &NIL;
-    }
+    TTree(TTree<T> &&aOtherTTree) : fKey(std::move(*aOtherTTree)), fLeft(&NIL), fMiddle(&NIL), fRight(&NIL) {}
 
     // move assignment operator, must not copy empty TTree
     TTree<T> &operator=(TTree<T> &&aOtherTTree) {
